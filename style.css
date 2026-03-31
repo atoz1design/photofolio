@@ -1,0 +1,202 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.96);
+  padding: 32px 42px 48px;
+  position: relative;
+  overflow-x: hidden;
+  background-color: #091113;
+}
+
+/* 背景テクスチャ固定 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background-image: url("assets/Gyi_h79boAApae7.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+}
+
+/* 暗い色味を上にかぶせる */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(
+    rgba(7, 17, 19, 0.9),
+    rgba(7, 17, 19, 0.88)
+  );
+}
+
+/* 外枠 */
+.page-frame {
+  position: fixed;
+  inset: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ヘッダー */
+.site-header {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 50px;
+  align-items: start;
+  margin-bottom: 56px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ロゴ */
+.logo-block {
+  width: 220px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.82);
+  padding-bottom: 10px;
+}
+
+.logo-small {
+  font-family: "Staatliches", sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.logo-block h1 {
+  font-family: "Staatliches", sans-serif;
+  font-size: 112px;
+  line-height: 0.88;
+  letter-spacing: 1px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.98);
+}
+
+/* カテゴリ */
+.filter-nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 42px;
+}
+
+.filter-btn {
+  font-family: "Staatliches", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 10px 22px;
+  min-width: 180px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+  transition: 0.2s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+/* ギャラリー */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  padding: 0 24px 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 写真カード */
+.card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+  aspect-ratio: 1.45 / 1;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: brightness(0.92) saturate(0.9) contrast(1.02);
+}
+
+/* レスポンシブ */
+@media (max-width: 1100px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-btn {
+    min-width: 150px;
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 24px 20px 36px;
+  }
+
+  .page-frame {
+    inset: 12px;
+  }
+
+  .site-header {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 36px;
+  }
+
+  .logo-block {
+    width: 180px;
+  }
+
+  .logo-small {
+    font-size: 20px;
+  }
+
+  .logo-block h1 {
+    font-size: 82px;
+  }
+
+  .filter-nav {
+    padding-top: 0;
+    gap: 10px;
+  }
+
+  .filter-btn {
+    font-size: 22px;
+    min-width: 130px;
+    padding: 10px 14px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0;
+  }
+}
