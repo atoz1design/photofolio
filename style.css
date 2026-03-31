@@ -27,7 +27,7 @@ body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
   color: var(--text-main);
-  padding: 30px 36px 40px;
+  padding: 22px 34px 34px;
   position: relative;
   overflow-x: hidden;
   background-color: var(--bg-base);
@@ -71,34 +71,35 @@ body::after {
 /* ヘッダー */
 .site-header {
   display: grid;
-  grid-template-columns: 230px 1fr;
-  gap: 64px;
+  grid-template-columns: 210px 1fr;
+  gap: 44px;
   align-items: start;
-  margin-bottom: 64px;
+  margin-bottom: 40px;
   position: relative;
   z-index: 2;
 }
 
 /* ロゴ */
 .logo-block {
-  width: 210px;
+  width: 205px;
   border-bottom: 2px solid var(--line-strong);
-  padding-bottom: 8px;
+  padding-bottom: 6px;
+  margin-top: 2px;
 }
 
 .logo-small {
   font-family: "Staatliches", sans-serif;
-  font-size: 23px;
+  font-size: 22px;
   line-height: 1;
   letter-spacing: 1px;
-  margin-bottom: 1px;
+  margin-bottom: 0;
   color: var(--text-soft);
 }
 
 .logo-block h1 {
   font-family: "Staatliches", sans-serif;
-  font-size: 108px;
-  line-height: 0.86;
+  font-size: 104px;
+  line-height: 0.84;
   letter-spacing: 1px;
   font-weight: 400;
   color: var(--text-main);
@@ -107,20 +108,20 @@ body::after {
 /* カテゴリ */
 .filter-nav {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
-  padding-top: 38px;
+  padding-top: 26px;
 }
 
 .filter-btn {
   font-family: "Staatliches", sans-serif;
-  font-size: 29px;
+  font-size: 28px;
   line-height: 1;
   letter-spacing: 1px;
   text-decoration: none;
   color: var(--text-soft);
-  padding: 10px 18px;
-  min-width: 175px;
+  padding: 9px 18px 8px;
+  min-width: 168px;
   text-align: center;
   border: 1px solid var(--line-soft);
   background: var(--panel-soft);
@@ -138,8 +139,8 @@ body::after {
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  padding: 0 18px 20px;
+  gap: 20px;
+  padding: 0 10px 18px;
   position: relative;
   z-index: 2;
 }
@@ -150,7 +151,7 @@ body::after {
   overflow: hidden;
   border: 1px solid var(--line-soft);
   background: var(--panel-soft);
-  aspect-ratio: 1.48 / 1;
+  aspect-ratio: 1.5 / 1;
 }
 
 .card img {
