@@ -1,1 +1,1 @@
-# photofolio
+# photo
