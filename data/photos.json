@@ -2,43 +2,8 @@
   {
     "id": 1,
     "filename": "photo_001.jpg",
-    "title": "Storm Approaching",
-    "description": "Dark clouds gathering over the mountain range at dusk.",
-    "category": "sky"
+    "title": "乙ヶ妻",
+    "description": "夕暮時に漂う乙ヶ妻の桜.",
+    "category": "LANDSCAPE"
   },
-  {
-    "id": 2,
-    "filename": "photo_002.jpg",
-    "title": "Morning Fog",
-    "description": "A quiet valley wrapped in soft morning mist.",
-    "category": "nature"
-  },
-  {
-    "id": 3,
-    "filename": "photo_003.jpg",
-    "title": "Golden Plains",
-    "description": "Endless fields stretching toward the horizon.",
-    "category": "landscape"
-  },
-  {
-    "id": 4,
-    "filename": "photo_004.jpg",
-    "title": "Cirrus Veil",
-    "description": "Wispy cirrus clouds painted across a pale blue sky.",
-    "category": "sky"
-  },
-  {
-    "id": 5,
-    "filename": "photo_005.jpg",
-    "title": "Deep Forest",
-    "description": "Ancient trees standing in silence and shadow.",
-    "category": "nature"
-  },
-  {
-    "id": 6,
-    "filename": "photo_006.jpg",
-    "title": "Coastal Edge",
-    "description": "Rocky shoreline meeting the restless sea.",
-    "category": "landscape"
-  }
 ]
