@@ -6,15 +6,11 @@
 
 :root {
   --bg-base: #12191c;
-
-  /* 元画像寄りの、白ではない薄い線色 */
   --line-soft: rgba(215, 209, 197, 0.16);
   --line-mid: rgba(215, 209, 197, 0.26);
   --line-strong: rgba(215, 209, 197, 0.52);
-
   --text-main: rgba(232, 226, 214, 0.9);
   --text-soft: rgba(220, 214, 202, 0.78);
-
   --panel-soft: rgba(255, 248, 235, 0.02);
   --panel-hover: rgba(255, 248, 235, 0.05);
 }
@@ -27,36 +23,36 @@ body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
   color: var(--text-main);
-  padding: 22px 34px 34px;
   position: relative;
   overflow-x: hidden;
   background-color: var(--bg-base);
 }
 
-/* 背景テクスチャ */
-body::before {
-  content: "";
+/* 背景ベタ */
+.bg-base {
   position: fixed;
   inset: 0;
   z-index: -3;
+  background: #12191c;
+}
+
+/* 背景テクスチャ */
+.bg-texture {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
   background-image: url("assets/Gyi_h79boAApae7.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.3;
+  pointer-events: none;
 }
 
-/* 背景ベタ */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background:
-    linear-gradient(
-      rgba(18, 25, 28, 0.88),
-      rgba(18, 25, 28, 0.9)
-    );
+.page-content {
+  position: relative;
+  z-index: 1;
+  padding: 22px 34px 34px;
 }
 
 /* 外枠 */
@@ -70,7 +66,13 @@ body::after {
 
 /* ヘッダー */
 .site-header {
-align-items: end;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 44px;
+  align-items: end;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
 }
 
 /* ロゴ */
@@ -78,7 +80,6 @@ align-items: end;
   width: 205px;
   border-bottom: 2px solid var(--line-strong);
   padding-bottom: 6px;
-  margin-top: 2px;
 }
 
 .logo-small {
@@ -104,7 +105,9 @@ align-items: end;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  padding-top: 26px;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 6px;
 }
 
 .filter-btn {
@@ -144,7 +147,7 @@ align-items: end;
   position: relative;
   overflow: hidden;
   border: 1px solid var(--line-soft);
-  background: var(--panel-soft);
+  background: rgba(18, 25, 28, 0.2);
   aspect-ratio: 1.5 / 1;
 }
 
@@ -169,7 +172,7 @@ align-items: end;
 }
 
 @media (max-width: 768px) {
-  body {
+  .page-content {
     padding: 22px 18px 32px;
   }
 
@@ -181,6 +184,7 @@ align-items: end;
     grid-template-columns: 1fr;
     gap: 28px;
     margin-bottom: 38px;
+    align-items: start;
   }
 
   .logo-block {
@@ -196,8 +200,8 @@ align-items: end;
   }
 
   .filter-nav {
-    padding-top: 0;
     gap: 10px;
+    padding-bottom: 0;
   }
 
   .filter-btn {
