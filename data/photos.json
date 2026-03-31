@@ -6,4 +6,10 @@
     "description": "Drifting at dusk Ogazuma's Weeping Cherry Tree",
     "category": "LANDSCAPE"
   },
-]
+{
+  "id": 7,
+  "filename": "photo_007.jpg",
+  "title": "写真のタイトル",
+  "description": "写真の説明文をここに入力します。",
+  "category": "sky"
+}
