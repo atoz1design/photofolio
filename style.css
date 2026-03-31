@@ -70,13 +70,7 @@ body::after {
 
 /* ヘッダー */
 .site-header {
-  display: grid;
-  grid-template-columns: 210px 1fr;
-  gap: 44px;
-  align-items: start;
-  margin-bottom: 40px;
-  position: relative;
-  z-index: 2;
+align-items: end;
 }
 
 /* ロゴ */
