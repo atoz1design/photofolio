@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
-    /* ─── Reset & Variables ─────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -29,7 +28,6 @@
       overflow-x: hidden;
     }
 
-    /* ─── Background Texture (fixed, behind everything) ─── */
     body::before {
       content: '';
       position: fixed;
@@ -43,7 +41,6 @@
       z-index: 0;
     }
 
-    /* ─── Header (fixed) ───────────────────────────────── */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -58,10 +55,7 @@
       z-index: 100;
     }
 
-    .logo {
-      flex-shrink: 0;
-      line-height: 1;
-    }
+    .logo { flex-shrink: 0; line-height: 1; }
     .logo .sub {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
@@ -79,7 +73,6 @@
       margin-top: -2px;
     }
 
-    /* vertical divider */
     .logo-divider {
       width: 1px;
       height: 44px;
@@ -87,11 +80,7 @@
       flex-shrink: 0;
     }
 
-    /* ─── Navigation ────────────────────────────────────── */
-    nav {
-      display: flex;
-      gap: 8px;
-    }
+    nav { display: flex; gap: 8px; }
 
     .filter-btn {
       font-family: 'Bebas Neue', sans-serif;
@@ -115,28 +104,24 @@
       background: rgba(255,255,255,0.06);
     }
 
-    /* ─── Main scroll area ──────────────────────────────── */
     main {
       position: relative;
       z-index: 1;
       padding: calc(var(--header-h) + 24px) 28px 60px;
     }
 
-    /* ─── Grid ──────────────────────────────────────────── */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
 
-    /* ─── Card ──────────────────────────────────────────── */
     .card {
       border: 1px solid var(--border);
       background: transparent;
       cursor: pointer;
       overflow: hidden;
       transition: border-color 0.25s, transform 0.25s;
-      /* white frame padding for the photo */
       padding: 6px 6px 0 6px;
       display: flex;
       flex-direction: column;
@@ -146,7 +131,6 @@
       transform: translateY(-2px);
     }
 
-    /* photo wrapper keeps aspect ratio */
     .card-img-wrap {
       width: 100%;
       aspect-ratio: 4/3;
@@ -159,7 +143,6 @@
       object-fit: cover;
       display: block;
       transition: transform 0.4s ease;
-      /* white border applied as outline inside the image area */
       outline: 4px solid #ffffff;
       outline-offset: -4px;
     }
@@ -167,9 +150,7 @@
       transform: scale(1.04);
     }
 
-    .card-info {
-      padding: 10px 4px 10px;
-    }
+    .card-info { padding: 10px 4px 10px; }
     .card-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 14px;
@@ -189,7 +170,6 @@
       text-overflow: ellipsis;
     }
 
-    /* ─── Lightbox ──────────────────────────────────────── */
     #lightbox {
       display: none;
       position: fixed;
@@ -224,15 +204,11 @@
       max-width: 82vw;
       max-height: 78vh;
       object-fit: contain;
-      /* white frame on lightbox image */
       outline: 8px solid #ffffff;
       outline-offset: -8px;
     }
 
-    .lb-meta {
-      margin-top: 14px;
-      padding-left: 2px;
-    }
+    .lb-meta { margin-top: 14px; padding-left: 2px; }
     .lb-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 22px;
@@ -248,7 +224,6 @@
       margin-top: 4px;
     }
 
-    /* close hint */
     .lb-close-hint {
       position: absolute;
       top: -32px;
@@ -260,12 +235,8 @@
       pointer-events: none;
     }
 
-    /* ─── Hidden cards ──────────────────────────────────── */
-    .card.hidden {
-      display: none;
-    }
+    .card.hidden { display: none; }
 
-    /* ─── Responsive ────────────────────────────────────── */
     @media (max-width: 900px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -281,7 +252,6 @@
 </head>
 <body>
 
-  <!-- ── Header ───────────────────────────────────────── -->
   <header>
     <div class="logo">
       <span class="sub">ATOZI</span>
@@ -296,14 +266,10 @@
     </nav>
   </header>
 
-  <!-- ── Main Grid ─────────────────────────────────────── -->
   <main>
-    <div class="grid" id="grid">
-      <!-- Cards are injected by JS -->
-    </div>
+    <div class="grid" id="grid"></div>
   </main>
 
-  <!-- ── Lightbox ──────────────────────────────────────── -->
   <div id="lightbox">
     <div class="lb-inner" id="lb-inner">
       <span class="lb-close-hint">TAP OUTSIDE TO CLOSE</span>
@@ -316,39 +282,98 @@
   </div>
 
   <script>
-    // ── Load photos from data/photos.json ──────────────────
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 📸 写真データ — 写真を追加する場合はここに追記してください
+    //
+    //   filename    : photos/ フォルダ内の画像ファイル名
+    //                 画像がまだない場合は null のままでOK
+    //   title       : 写真のタイトル
+    //   description : 写真の説明文
+    //   category    : "sky" / "nature" / "landscape" のいずれか
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const PHOTOS = [
+      {
+        id: 1,
+        filename: null,
+        title: "Storm Approaching",
+        description: "Dark clouds gathering over the mountain range at dusk.",
+        category: "sky"
+      },
+      {
+        id: 2,
+        filename: null,
+        title: "Morning Fog",
+        description: "A quiet valley wrapped in soft morning mist.",
+        category: "nature"
+      },
+      {
+        id: 3,
+        filename: null,
+        title: "Golden Plains",
+        description: "Endless fields stretching toward the horizon.",
+        category: "landscape"
+      },
+      {
+        id: 4,
+        filename: null,
+        title: "Cirrus Veil",
+        description: "Wispy cirrus clouds painted across a pale blue sky.",
+        category: "sky"
+      },
+      {
+        id: 5,
+        filename: null,
+        title: "Deep Forest",
+        description: "Ancient trees standing in silence and shadow.",
+        category: "nature"
+      },
+      {
+        id: 6,
+        filename: null,
+        title: "Coastal Edge",
+        description: "Rocky shoreline meeting the restless sea.",
+        category: "landscape"
+      },
+      // ↓ 写真を追加する場合はここにコピーして増やしてください
+      // {
+      //   id: 7,
+      //   filename: "photo_007.jpg",
+      //   title: "タイトル",
+      //   description: "説明文をここに入力。",
+      //   category: "sky"
+      // },
+    ];
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
     async function init() {
-      let photos = [];
-      try {
-        const res = await fetch('data/photos.json');
-        photos = await res.json();
-      } catch (e) {
-        console.warn('photos.json not found — using placeholder data.');
-        // Fallback placeholders (useful for preview before real photos are added)
-        photos = Array.from({ length: 9 }, (_, i) => ({
-          id: i + 1,
-          filename: null,
-          title: `TITLE ${i + 1}`,
-          description: 'TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT',
-          category: ['sky', 'nature', 'landscape'][i % 3]
-        }));
+      let photos = PHOTOS; // デフォルトは上のPHOTOS配列
+
+      // GitHub Pages等のサーバー環境ではdata/photos.jsonを優先
+      if (location.protocol !== 'file:') {
+        try {
+          const res = await fetch('data/photos.json');
+          if (res.ok) {
+            const json = await res.json();
+            if (Array.isArray(json) && json.length > 0) photos = json;
+          }
+        } catch (e) {
+          // 失敗時はPHOTOS配列にフォールバック
+        }
       }
+
       buildGrid(photos);
       bindFilter(photos);
     }
 
-    // ── Build grid ─────────────────────────────────────────
     function buildGrid(photos) {
       const grid = document.getElementById('grid');
       grid.innerHTML = '';
       photos.forEach(p => {
         const src = p.filename ? `photos/${p.filename}` : null;
-
         const card = document.createElement('div');
         card.className = 'card';
         card.dataset.category = p.category;
         card.dataset.id = p.id;
-
         card.innerHTML = `
           <div class="card-img-wrap">
             ${src
@@ -361,21 +386,17 @@
             <div class="card-desc">${p.description}</div>
           </div>
         `;
-
         card.addEventListener('click', () => openLightbox(p));
         grid.appendChild(card);
       });
     }
 
-    // ── Filter ─────────────────────────────────────────────
     function bindFilter(photos) {
       document.getElementById('nav').addEventListener('click', e => {
         const btn = e.target.closest('.filter-btn');
         if (!btn) return;
-
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
         const filter = btn.dataset.filter;
         document.querySelectorAll('.card').forEach(card => {
           if (filter === 'all' || card.dataset.category === filter) {
@@ -387,16 +408,15 @@
       });
     }
 
-    // ── Lightbox ───────────────────────────────────────────
-    const lb       = document.getElementById('lightbox');
-    const lbInner  = document.getElementById('lb-inner');
-    const lbImg    = document.getElementById('lb-img');
-    const lbTitle  = document.getElementById('lb-title');
-    const lbDesc   = document.getElementById('lb-desc');
+    const lb      = document.getElementById('lightbox');
+    const lbInner = document.getElementById('lb-inner');
+    const lbImg   = document.getElementById('lb-img');
+    const lbTitle = document.getElementById('lb-title');
+    const lbDesc  = document.getElementById('lb-desc');
 
     function openLightbox(photo) {
-      lbImg.src    = photo.filename ? `photos/${photo.filename}` : '';
-      lbImg.alt    = photo.title;
+      lbImg.src   = photo.filename ? `photos/${photo.filename}` : '';
+      lbImg.alt   = photo.title;
       lbImg.style.display = photo.filename ? 'block' : 'none';
       lbTitle.textContent = photo.title;
       lbDesc.textContent  = photo.description;
@@ -410,17 +430,14 @@
       lbImg.src = '';
     }
 
-    // Click outside lb-inner → close
     lb.addEventListener('click', e => {
       if (!lbInner.contains(e.target)) closeLightbox();
     });
 
-    // ESC key → close
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // ── Start ──────────────────────────────────────────────
     init();
   </script>
 </body>
