@@ -3,65 +3,425 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATOZ1 PHOTO</title>
+  <title>ATOZI PHOTO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Variables ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    :root {
+      --bg:        #1a2220;
+      --surface:   #0d1614;
+      --border:    rgba(255,255,255,0.18);
+      --text-main: #e8e8e0;
+      --text-sub:  rgba(232,232,224,0.55);
+      --accent:    #ffffff;
+      --header-h:  72px;
+    }
 
-  <link rel="stylesheet" href="style.css" />
+    html, body {
+      height: 100%;
+      background-color: var(--surface);
+      color: var(--text-main);
+      font-family: 'Barlow Condensed', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── Background Texture (fixed, behind everything) ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('assets/texture.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Header (fixed) ───────────────────────────────── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 32px;
+      background-color: rgba(13,22,20,0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .logo {
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .logo .sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+    .logo .main {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      display: block;
+      margin-top: -2px;
+    }
+
+    /* vertical divider */
+    .logo-divider {
+      width: 1px;
+      height: 44px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ─── Navigation ────────────────────────────────────── */
+    nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      color: var(--text-sub);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 6px 20px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      text-transform: uppercase;
+    }
+    .filter-btn:hover {
+      color: var(--accent);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .filter-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* ─── Main scroll area ──────────────────────────────── */
+    main {
+      position: relative;
+      z-index: 1;
+      padding: calc(var(--header-h) + 24px) 28px 60px;
+    }
+
+    /* ─── Grid ──────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    /* ─── Card ──────────────────────────────────────────── */
+    .card {
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+      /* white frame padding for the photo */
+      padding: 6px 6px 0 6px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,0.55);
+      transform: translateY(-2px);
+    }
+
+    /* photo wrapper keeps aspect ratio */
+    .card-img-wrap {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #111;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+      /* white border applied as outline inside the image area */
+      outline: 6px solid #ffffff;
+      outline-offset: -6px;
+    }
+    .card:hover .card-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .card-info {
+      padding: 10px 4px 10px;
+    }
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .card-desc {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-sub);
+      letter-spacing: 0.03em;
+      line-height: 1.5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ─── Lightbox ──────────────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.88);
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    #lightbox.open {
+      display: flex;
+      animation: lb-in 0.25s ease;
+    }
+    @keyframes lb-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .lb-inner {
+      position: relative;
+      cursor: default;
+      max-width: 82vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #lb-img {
+      display: block;
+      max-width: 82vw;
+      max-height: 78vh;
+      object-fit: contain;
+      /* white frame on lightbox image */
+      outline: 8px solid #ffffff;
+      outline-offset: -8px;
+    }
+
+    .lb-meta {
+      margin-top: 14px;
+      padding-left: 2px;
+    }
+    .lb-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+    .lb-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+
+    /* close hint */
+    .lb-close-hint {
+      position: absolute;
+      top: -32px;
+      right: 0;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    /* ─── Hidden cards ──────────────────────────────────── */
+    .card.hidden {
+      display: none;
+    }
+
+    /* ─── Responsive ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      header { gap: 16px; }
+      .filter-btn { padding: 5px 12px; font-size: 13px; }
+      .logo .main { font-size: 30px; }
+      .lb-inner { max-width: 94vw; }
+      #lb-img { max-width: 94vw; }
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-base"></div>
-  <div class="bg-texture"></div>
-  <div class="bg-dark"></div>
 
-  <div class="page-frame"></div>
+  <!-- ── Header ───────────────────────────────────────── -->
+  <header>
+    <div class="logo">
+      <span class="sub">ATOZI</span>
+      <span class="main">PHOTO</span>
+    </div>
+    <div class="logo-divider"></div>
+    <nav id="nav">
+      <button class="filter-btn active" data-filter="all">ALL</button>
+      <button class="filter-btn" data-filter="sky">SKY</button>
+      <button class="filter-btn" data-filter="nature">NATURE</button>
+      <button class="filter-btn" data-filter="landscape">LANDSCAPE</button>
+    </nav>
+  </header>
 
-  <div class="page">
-    <header class="hero">
-      <div class="brand">
-        <div class="brand-small">ATOZ1</div>
-        <div class="brand-title">PHOTO</div>
+  <!-- ── Main Grid ─────────────────────────────────────── -->
+  <main>
+    <div class="grid" id="grid">
+      <!-- Cards are injected by JS -->
+    </div>
+  </main>
+
+  <!-- ── Lightbox ──────────────────────────────────────── -->
+  <div id="lightbox">
+    <div class="lb-inner" id="lb-inner">
+      <span class="lb-close-hint">TAP OUTSIDE TO CLOSE</span>
+      <img id="lb-img" src="" alt="" />
+      <div class="lb-meta">
+        <div class="lb-title" id="lb-title"></div>
+        <div class="lb-desc"  id="lb-desc"></div>
       </div>
-
-      <nav class="filters">
-        <a href="#" class="filter is-active">ALL</a>
-        <a href="#" class="filter">SKY</a>
-        <a href="#" class="filter">NATURE</a>
-        <a href="#" class="filter">LANDSCAPE</a>
-      </nav>
-    </header>
-
-    <main class="gallery">
-      <article class="card">
-        <img src="images/photo1.jpg" alt="photo1">
-        <div class="card-meta">
-          <div class="card-title">TITLE</div>
-          <div class="card-sub">TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT</div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="images/photo2.jpg" alt="photo2">
-      </article>
-
-      <article class="card">
-        <img src="images/photo3.jpg" alt="photo3">
-      </article>
-
-      <article class="card">
-        <img src="images/photo4.jpg" alt="photo4">
-      </article>
-
-      <article class="card">
-        <img src="images/photo5.jpg" alt="photo5">
-      </article>
-
-      <article class="card">
-        <img src="images/photo6.jpg" alt="photo6">
-      </article>
-    </main>
+    </div>
   </div>
+
+  <script>
+    // ── Load photos from data/photos.json ──────────────────
+    async function init() {
+      let photos = [];
+      try {
+        const res = await fetch('data/photos.json');
+        photos = await res.json();
+      } catch (e) {
+        console.warn('photos.json not found — using placeholder data.');
+        // Fallback placeholders (useful for preview before real photos are added)
+        photos = Array.from({ length: 9 }, (_, i) => ({
+          id: i + 1,
+          filename: null,
+          title: `TITLE ${i + 1}`,
+          description: 'TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT',
+          category: ['sky', 'nature', 'landscape'][i % 3]
+        }));
+      }
+      buildGrid(photos);
+      bindFilter(photos);
+    }
+
+    // ── Build grid ─────────────────────────────────────────
+    function buildGrid(photos) {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      photos.forEach(p => {
+        const src = p.filename ? `photos/${p.filename}` : null;
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.category = p.category;
+        card.dataset.id = p.id;
+
+        card.innerHTML = `
+          <div class="card-img-wrap">
+            ${src
+              ? `<img src="${src}" alt="${p.title}" loading="lazy" />`
+              : `<div style="width:100%;height:100%;background:#1e2b28;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:11px;letter-spacing:.1em;">NO IMAGE</div>`
+            }
+          </div>
+          <div class="card-info">
+            <div class="card-title">${p.title}</div>
+            <div class="card-desc">${p.description}</div>
+          </div>
+        `;
+
+        card.addEventListener('click', () => openLightbox(p));
+        grid.appendChild(card);
+      });
+    }
+
+    // ── Filter ─────────────────────────────────────────────
+    function bindFilter(photos) {
+      document.getElementById('nav').addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.card').forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    }
+
+    // ── Lightbox ───────────────────────────────────────────
+    const lb       = document.getElementById('lightbox');
+    const lbInner  = document.getElementById('lb-inner');
+    const lbImg    = document.getElementById('lb-img');
+    const lbTitle  = document.getElementById('lb-title');
+    const lbDesc   = document.getElementById('lb-desc');
+
+    function openLightbox(photo) {
+      lbImg.src    = photo.filename ? `photos/${photo.filename}` : '';
+      lbImg.alt    = photo.title;
+      lbImg.style.display = photo.filename ? 'block' : 'none';
+      lbTitle.textContent = photo.title;
+      lbDesc.textContent  = photo.description;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    // Click outside lb-inner → close
+    lb.addEventListener('click', e => {
+      if (!lbInner.contains(e.target)) closeLightbox();
+    });
+
+    // ESC key → close
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // ── Start ──────────────────────────────────────────────
+    init();
+  </script>
 </body>
 </html>
