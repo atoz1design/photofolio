@@ -278,36 +278,10 @@
       /* スマホ専用要素を表示 */
       .lb-sp { display: block; }
 
-      /* 左カラム: ← と CLOSE を縦積み */
-      #lb-left-col {
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
-        width: 64px;
-        border-right: 1px solid rgba(255,255,255,0.12);
-      }
-      #lb-close-btn {
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 11px;
-        letter-spacing: 0.15em;
-        color: rgba(255,255,255,0.6);
-        background: transparent;
-        border: none;
-        border-top: 1px solid rgba(255,255,255,0.12);
-        padding: 8px 0;
-        cursor: pointer;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-      }
-      #lb-close-btn:hover { background: rgba(255,255,255,0.08); }
-
       /* ナビバー: ← タイトル/説明 → */
       #lb-nav-bar {
         display: flex;
-        align-items: center;
+        align-items: stretch;
         width: 100%;
         flex-shrink: 0;
         border-top: 1px solid rgba(255,255,255,0.12);
@@ -329,7 +303,6 @@
       #lb-prev-sp, #lb-next-sp {
         flex-shrink: 0;
         width: 64px;
-        height: 72px;
         font-size: 28px;
         background: transparent;
         border: none;
@@ -342,6 +315,26 @@
       }
       #lb-prev-sp:hover, #lb-next-sp:hover { background: rgba(255,255,255,0.08); }
       #lb-prev-sp:disabled, #lb-next-sp:disabled { opacity: 0.2; cursor: default; }
+
+      /* CLOSEボタン: ナビバーの下に独立した1行 */
+      #lb-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        flex-shrink: 0;
+        padding: 10px 0;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        color: rgba(255,255,255,0.55);
+        background: rgba(0,0,0,0.5);
+        border: none;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      #lb-close-btn:hover { background: rgba(255,255,255,0.08); }
     }
   </style>
 </head>
@@ -386,16 +379,15 @@
 
     <!-- スマホ版ナビバー -->
     <div id="lb-nav-bar" class="lb-sp">
-      <div id="lb-left-col">
-        <button id="lb-prev-sp">&#8592;</button>
-        <button id="lb-close-btn">✕ CLOSE</button>
-      </div>
+      <button id="lb-prev-sp">&#8592;</button>
       <div class="lb-nav-meta">
         <div class="lb-title" id="lb-title-sp"></div>
         <div class="lb-desc"  id="lb-desc-sp"></div>
       </div>
       <button id="lb-next-sp">&#8594;</button>
     </div>
+    <!-- スマホ版CLOSEボタン（ナビバーの下） -->
+    <button id="lb-close-btn" class="lb-sp">✕ CLOSE</button>
 
   </div>
 
