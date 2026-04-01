@@ -247,18 +247,16 @@
   .logo .main { font-size: 30px; }
   .lb-inner { max-width: 94vw; }
   #lb-img { max-width: 94vw; }
-
+     
   .lb-prev, .lb-next {
+    position: fixed;
     top: auto;
+    bottom: 32px;
     transform: none;
-    bottom: 0;
   }
-  .lb-prev { left: 0; }
-  .lb-next { right: 0; }
-  .lb-meta {
-    padding-left: 52px;
-    padding-right: 52px;
-  }
+  .lb-prev { left: calc(50% - 64px); }
+  .lb-next { right: calc(50% - 64px); }
+}
 }
 
     .lb-prev, .lb-next {
