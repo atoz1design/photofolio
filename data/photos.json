@@ -40,5 +40,33 @@
     "title": "Coastal Edge",
     "description": "Rocky shoreline meeting the restless sea.",
     "category": "landscape"
-  }
+  },
+  {
+    "id": 7,
+    "filename": "photo_007.jpg",
+    "title": "Coastal Edge",
+    "description": "Rocky shoreline meeting the restless sea.",
+    "category": "landscape"
+  },
+  {
+    "id": 8,
+    "filename": "photo_008.jpg",
+    "title": "Coastal Edge",
+    "description": "Rocky shoreline meeting the restless sea.",
+    "category": "landscape"
+  },
+  {
+    "id": 9,
+    "filename": "photo_009.jpg",
+    "title": "Coastal Edge",
+    "description": "Rocky shoreline meeting the restless sea.",
+    "category": "landscape"
+  },
+  {
+    "id": 10,
+    "filename": "photo_010.jpg",
+    "title": "Coastal Edge",
+    "description": "Rocky shoreline meeting the restless sea.",
+    "category": "landscape"
+  },
 ]
