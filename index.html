@@ -278,21 +278,31 @@
       /* スマホ専用要素を表示 */
       .lb-sp { display: block; }
 
-      /* CLOSEボタン */
-      #lb-close-btn {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 12px;
-        letter-spacing: 0.15em;
-        color: rgba(255,255,255,0.7);
-        background: rgba(0,0,0,0.6);
-        border: 1px solid rgba(255,255,255,0.25);
-        padding: 7px 14px;
-        cursor: pointer;
-        z-index: 202;
+      /* 左カラム: ← と CLOSE を縦積み */
+      #lb-left-col {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        width: 64px;
+        border-right: 1px solid rgba(255,255,255,0.12);
       }
+      #lb-close-btn {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        color: rgba(255,255,255,0.6);
+        background: transparent;
+        border: none;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        padding: 8px 0;
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      #lb-close-btn:hover { background: rgba(255,255,255,0.08); }
 
       /* ナビバー: ← タイトル/説明 → */
       #lb-nav-bar {
@@ -316,7 +326,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      #lb-nav-bar button {
+      #lb-prev-sp, #lb-next-sp {
         flex-shrink: 0;
         width: 64px;
         height: 72px;
@@ -330,8 +340,8 @@
         justify-content: center;
         transition: background 0.2s;
       }
-      #lb-nav-bar button:hover { background: rgba(255,255,255,0.08); }
-      #lb-nav-bar button:disabled { opacity: 0.2; cursor: default; }
+      #lb-prev-sp:hover, #lb-next-sp:hover { background: rgba(255,255,255,0.08); }
+      #lb-prev-sp:disabled, #lb-next-sp:disabled { opacity: 0.2; cursor: default; }
     }
   </style>
 </head>
@@ -359,9 +369,6 @@
 
   <div id="lightbox">
 
-    <!-- スマホ専用CLOSEボタン -->
-    <button id="lb-close-btn" class="lb-sp">✕ CLOSE</button>
-
     <!-- 画像エリア -->
     <div class="lb-inner" id="lb-inner">
       <span class="lb-close-hint">TAP OUTSIDE TO CLOSE</span>
@@ -379,7 +386,10 @@
 
     <!-- スマホ版ナビバー -->
     <div id="lb-nav-bar" class="lb-sp">
-      <button id="lb-prev-sp">&#8592;</button>
+      <div id="lb-left-col">
+        <button id="lb-prev-sp">&#8592;</button>
+        <button id="lb-close-btn">✕ CLOSE</button>
+      </div>
       <div class="lb-nav-meta">
         <div class="lb-title" id="lb-title-sp"></div>
         <div class="lb-desc"  id="lb-desc-sp"></div>
