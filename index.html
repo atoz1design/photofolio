@@ -135,7 +135,7 @@
       width: 100%;
       aspect-ratio: 4/3;
       overflow: hidden;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.45);
     }
     .card-img-wrap img {
       width: 100%;
@@ -170,6 +170,9 @@
       text-overflow: ellipsis;
     }
 
+    /* =====================
+       LIGHTBOX
+    ===================== */
     #lightbox {
       display: none;
       position: fixed;
@@ -208,7 +211,11 @@
       outline-offset: -8px;
     }
 
-    .lb-meta { margin-top: 14px; padding-left: 2px; }
+    /* PC版: タイトル・説明は画像の下に普通に表示 */
+    .lb-meta {
+      margin-top: 14px;
+      padding-left: 2px;
+    }
     .lb-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 22px;
@@ -235,121 +242,136 @@
       pointer-events: none;
     }
 
+    /* PC版の矢印ボタン（画面左右） */
+    .lb-prev, .lb-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 24px;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 201;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.18); }
+    .lb-prev { left: 24px; }
+    .lb-next { right: 24px; }
+    .lb-prev:disabled, .lb-next:disabled { opacity: 0.2; cursor: default; }
+
+    /* lb-bottomはPC版では非表示 */
+    .lb-bottom { display: none; }
+
     .card.hidden { display: none; }
 
-   @media (max-width: 900px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
+    /* =====================
+       TABLET
+    ===================== */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
 
-.lb-prev, .lb-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  font-size: 24px;
-  width: 48px;
-  height: 48px;
-  cursor: pointer;
-  transition: background 0.2s;
-  z-index: 201;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.18); }
-.lb-prev { left: 24px; }
-.lb-next { right: 24px; }
-.lb-prev:disabled, .lb-next:disabled { opacity: 0.2; cursor: default; }
+    /* =====================
+       MOBILE
+    ===================== */
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      header { gap: 16px; }
+      .filter-btn { padding: 5px 12px; font-size: 13px; }
+      .logo .main { font-size: 30px; }
 
-@media (max-width: 560px) {
-  .grid { grid-template-columns: 1fr; }
-  header { gap: 16px; }
-  .filter-btn { padding: 5px 12px; font-size: 13px; }
-  .logo .main { font-size: 30px; }
-  nav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  nav::-webkit-scrollbar { display: none; }
+      nav {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      nav::-webkit-scrollbar { display: none; }
 
-  #lightbox {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .lb-inner {
-    max-width: 100vw;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  #lb-img {
-    max-width: 100vw;
-    max-height: 60vh;
-  }
+      /* ライトボックスを縦並びレイアウトに */
+      #lightbox {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        cursor: default;
+      }
 
-  /* PC版の矢印を非表示 */
-  .lb-prev, .lb-next {
-    display: none;
-  }
+      .lb-inner {
+        max-width: 100vw;
+        width: 100%;
+        max-height: none;
+        align-items: center;
+        flex: 1;
+        justify-content: center;
+      }
 
-  /* 画像下のボタン＋テキストエリア */
-  .lb-bottom {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-top: 16px;
-    gap: 12px;
-  }
-  .lb-bottom .lb-meta {
-    flex: 1;
-    text-align: center;
-    margin-top: 0;
-  }
-  .lb-bottom button {
-    flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    font-size: 28px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-  }
-  .lb-bottom button:hover { background: rgba(255,255,255,0.2); }
-  .lb-bottom button:disabled { opacity: 0.2; cursor: default; }
-}
+      .lb-close-hint {
+        position: static;
+        display: block;
+        text-align: center;
+        margin-bottom: 16px;
+      }
 
-    .lb-prev, .lb-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  font-size: 24px;
-  width: 48px;
-  height: 48px;
-  cursor: pointer;
-  transition: background 0.2s;
-  z-index: 201;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.18); }
-.lb-prev { left: 24px; }
-.lb-next { right: 24px; }
-.lb-prev:disabled, .lb-next:disabled { opacity: 0.2; cursor: default; }
-    
+      #lb-img {
+        max-width: 100vw;
+        max-height: 60vh;
+        outline: none;
+      }
+
+      /* PC版の矢印を非表示 */
+      .lb-prev, .lb-next {
+        display: none;
+      }
+
+      /* スマホ版: 画像の下に「← タイトル・説明 →」 */
+      .lb-bottom {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 16px 12px;
+        gap: 12px;
+        flex-shrink: 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+      .lb-bottom .lb-meta {
+        flex: 1;
+        text-align: center;
+        margin-top: 0;
+        padding-left: 0;
+        min-width: 0;
+      }
+      .lb-bottom .lb-title {
+        font-size: 18px;
+      }
+      .lb-bottom .lb-desc {
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .lb-bottom button {
+        flex-shrink: 0;
+        width: 56px;
+        height: 56px;
+        font-size: 28px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .lb-bottom button:hover { background: rgba(255,255,255,0.2); }
+      .lb-bottom button:disabled { opacity: 0.2; cursor: default; }
+    }
   </style>
 </head>
 <body>
@@ -374,31 +396,31 @@
     <div class="grid" id="grid"></div>
   </main>
 
-<div id="lightbox">
-  <div class="lb-inner" id="lb-inner">
-    <span class="lb-close-hint">TAP OUTSIDE TO CLOSE</span>
-    <img id="lb-img" src="" alt="" />
-    <div class="lb-bottom">
-      <button class="lb-prev" id="lb-prev">&#8592;</button>
+  <div id="lightbox">
+    <div class="lb-inner" id="lb-inner">
+      <span class="lb-close-hint">TAP OUTSIDE TO CLOSE</span>
+      <img id="lb-img" src="" alt="" />
+      <!-- PC版のタイトル・説明（スマホでは非表示） -->
       <div class="lb-meta">
         <div class="lb-title" id="lb-title"></div>
         <div class="lb-desc"  id="lb-desc"></div>
       </div>
-      <button class="lb-next" id="lb-next">&#8594;</button>
     </div>
+    <!-- スマホ版: ← タイトル・説明 → -->
+    <div class="lb-bottom">
+      <button id="lb-prev-sp">&#8592;</button>
+      <div class="lb-meta">
+        <div class="lb-title" id="lb-title-sp"></div>
+        <div class="lb-desc"  id="lb-desc-sp"></div>
+      </div>
+      <button id="lb-next-sp">&#8594;</button>
+    </div>
+    <!-- PC版の矢印 -->
+    <button class="lb-prev" id="lb-prev">&#8592;</button>
+    <button class="lb-next" id="lb-next">&#8594;</button>
   </div>
-</div>
 
   <script>
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 📸 写真データ — 写真を追加する場合はここに追記してください
-    //
-    //   filename    : photos/ フォルダ内の画像ファイル名
-    //                 画像がまだない場合は null のままでOK
-    //   title       : 写真のタイトル
-    //   description : 写真の説明文
-    //   category    : "sky" / "nature" / "landscape" のいずれか
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     const PHOTOS = [
       {
         id: 1,
@@ -442,49 +464,46 @@
         description: "花は春を告げ、峰はなお冬の深さを語っている。",
         category: "landscape"
       },
-  {
-    "id": 7,
-    "filename": "photo_007.jpg",
-    "title": "Coastal Edge",
-    "description": "Rocky shoreline meeting the restless sea.",
-    "category": "landscape"
-  },
-  {
-    "id": 8,
-    "filename": "photo_008.jpg",
-    "title": "Coastal Edge",
-    "description": "Rocky shoreline meeting the restless sea.",
-    "category": "landscape"
-  },
-  {
-    "id": 9,
-    "filename": "photo_009.jpg",
-    "title": "Coastal Edge",
-    "description": "Rocky shoreline meeting the restless sea.",
-    "category": "landscape"
-  },
-  {
-    "id": 10,
-    "filename": "photo_010.jpg",
-    "title": "Coastal Edge",
-    "description": "Rocky shoreline meeting the restless sea.",
-    "category": "landscape"
-  },      
+      {
+        id: 7,
+        filename: "photo_007.jpg",
+        title: "Coastal Edge",
+        description: "Rocky shoreline meeting the restless sea.",
+        category: "landscape"
+      },
+      {
+        id: 8,
+        filename: "photo_008.jpg",
+        title: "Coastal Edge",
+        description: "Rocky shoreline meeting the restless sea.",
+        category: "landscape"
+      },
+      {
+        id: 9,
+        filename: "photo_009.jpg",
+        title: "Coastal Edge",
+        description: "Rocky shoreline meeting the restless sea.",
+        category: "landscape"
+      },
+      {
+        id: 10,
+        filename: "photo_010.jpg",
+        title: "Coastal Edge",
+        description: "Rocky shoreline meeting the restless sea.",
+        category: "landscape"
+      },
       // ↓ 写真を追加する場合はここにコピーして増やしてください
       // {
-      //   id: 7,
-      //   filename: "photo_007.jpg",
+      //   id: 11,
+      //   filename: "photo_011.jpg",
       //   title: "タイトル",
       //   description: "説明文をここに入力。",
       //   category: "sky"
       // },
     ];
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     async function init() {
-      let photos = PHOTOS; // デフォルトは上のPHOTOS配列
-
-      // GitHub Pages等のサーバー環境ではdata/photos.jsonを優先
+      let photos = PHOTOS;
       if (location.protocol !== 'file:') {
         try {
           const res = await fetch('data/photos.json');
@@ -492,11 +511,8 @@
             const json = await res.json();
             if (Array.isArray(json) && json.length > 0) photos = json;
           }
-        } catch (e) {
-          // 失敗時はPHOTOS配列にフォールバック
-        }
+        } catch (e) {}
       }
-
       buildGrid(photos);
       bindFilter(photos);
     }
@@ -545,68 +561,86 @@
       });
     }
 
-const lb      = document.getElementById('lightbox');
-const lbInner = document.getElementById('lb-inner');
-const lbImg   = document.getElementById('lb-img');
-const lbTitle = document.getElementById('lb-title');
-const lbDesc  = document.getElementById('lb-desc');
-const lbPrev  = document.getElementById('lb-prev');
-const lbNext  = document.getElementById('lb-next');
+    const lb        = document.getElementById('lightbox');
+    const lbInner   = document.getElementById('lb-inner');
+    const lbImg     = document.getElementById('lb-img');
+    const lbTitle   = document.getElementById('lb-title');
+    const lbDesc    = document.getElementById('lb-desc');
+    const lbTitleSp = document.getElementById('lb-title-sp');
+    const lbDescSp  = document.getElementById('lb-desc-sp');
+    const lbPrev    = document.getElementById('lb-prev');
+    const lbNext    = document.getElementById('lb-next');
+    const lbPrevSp  = document.getElementById('lb-prev-sp');
+    const lbNextSp  = document.getElementById('lb-next-sp');
 
-let _photos = [];
-let _index  = 0;
+    let _photos = [];
+    let _index  = 0;
 
-function getVisiblePhotos() {
-  const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-  return activeFilter === 'all'
-    ? _photos
-    : _photos.filter(p => p.category === activeFilter);
-}
+    function getVisiblePhotos() {
+      const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+      return activeFilter === 'all'
+        ? _photos
+        : _photos.filter(p => p.category === activeFilter);
+    }
 
-function openLightbox(photo) {
-  _index = getVisiblePhotos().findIndex(p => p.id === photo.id);
-  renderLightbox();
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+    function openLightbox(photo) {
+      _index = getVisiblePhotos().findIndex(p => p.id === photo.id);
+      renderLightbox();
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-function renderLightbox() {
-  const visible = getVisiblePhotos();
-  const photo = visible[_index];
-  lbImg.src   = photo.filename ? `photos/${photo.filename}` : '';
-  lbImg.alt   = photo.title;
-  lbImg.style.display = photo.filename ? 'block' : 'none';
-  lbTitle.textContent = photo.title;
-  lbDesc.textContent  = photo.description;
-  lbPrev.disabled = _index === 0;
-  lbNext.disabled = _index === visible.length - 1;
-}
+    function renderLightbox() {
+      const visible = getVisiblePhotos();
+      const photo = visible[_index];
+      lbImg.src  = photo.filename ? `photos/${photo.filename}` : '';
+      lbImg.alt  = photo.title;
+      lbImg.style.display = photo.filename ? 'block' : 'none';
+      // PC版
+      lbTitle.textContent = photo.title;
+      lbDesc.textContent  = photo.description;
+      lbPrev.disabled = _index === 0;
+      lbNext.disabled = _index === visible.length - 1;
+      // スマホ版
+      lbTitleSp.textContent = photo.title;
+      lbDescSp.textContent  = photo.description;
+      lbPrevSp.disabled = _index === 0;
+      lbNextSp.disabled = _index === visible.length - 1;
+    }
 
-function closeLightbox() {
-  lb.classList.remove('open');
-  document.body.style.overflow = '';
-  lbImg.src = '';
-}
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
 
-lbPrev.addEventListener('click', e => {
-  e.stopPropagation();
-  if (_index > 0) { _index--; renderLightbox(); }
-});
-lbNext.addEventListener('click', e => {
-  e.stopPropagation();
-  if (_index < getVisiblePhotos().length - 1) { _index++; renderLightbox(); }
-});
+    lbPrev.addEventListener('click', e => {
+      e.stopPropagation();
+      if (_index > 0) { _index--; renderLightbox(); }
+    });
+    lbNext.addEventListener('click', e => {
+      e.stopPropagation();
+      if (_index < getVisiblePhotos().length - 1) { _index++; renderLightbox(); }
+    });
+    lbPrevSp.addEventListener('click', e => {
+      e.stopPropagation();
+      if (_index > 0) { _index--; renderLightbox(); }
+    });
+    lbNextSp.addEventListener('click', e => {
+      e.stopPropagation();
+      if (_index < getVisiblePhotos().length - 1) { _index++; renderLightbox(); }
+    });
 
-lb.addEventListener('click', e => {
-  if (!lbInner.contains(e.target)) closeLightbox();
-});
+    lb.addEventListener('click', e => {
+      if (!lbInner.contains(e.target) && e.target !== lbPrev && e.target !== lbNext) closeLightbox();
+    });
 
-document.addEventListener('keydown', e => {
-  if (!lb.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft'  && _index > 0) { _index--; renderLightbox(); }
-  if (e.key === 'ArrowRight' && _index < getVisiblePhotos().length - 1) { _index++; renderLightbox(); }
-});
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft'  && _index > 0) { _index--; renderLightbox(); }
+      if (e.key === 'ArrowRight' && _index < getVisiblePhotos().length - 1) { _index++; renderLightbox(); }
+    });
 
     init();
   </script>
