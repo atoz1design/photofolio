@@ -240,23 +240,41 @@
     @media (max-width: 900px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
     }
-   @media (max-width: 560px) {
+    @media (max-width: 560px) {
   .grid { grid-template-columns: 1fr; }
   header { gap: 16px; }
   .filter-btn { padding: 5px 12px; font-size: 13px; }
   .logo .main { font-size: 30px; }
   .lb-inner { max-width: 94vw; }
   #lb-img { max-width: 94vw; }
-     
+
+  nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  /* ↓ 矢印ボタン（差し替え） */
   .lb-prev, .lb-next {
     position: fixed;
     top: auto;
-    bottom: 32px;
+    bottom: 0;
     transform: none;
+    width: 50%;
+    height: 64px;
+    font-size: 32px;
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 0;
   }
-  .lb-prev { left: calc(50% - 64px); }
-  .lb-next { right: calc(50% - 64px); }
-}
+  .lb-prev { left: 0; border-right: 1px solid rgba(255,255,255,0.15); }
+  .lb-next { right: 0; }
+
+  /* タイトル・説明文が矢印に被らないよう余白を追加 */
+  .lb-meta { margin-bottom: 80px; }
 }
 
     .lb-prev, .lb-next {
